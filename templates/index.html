@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Personalized Study Assistant</title>
+</head>
+<body>
+    <h1>Welcome to the Personalized Study Assistant</h1>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="title">Note Title:</label>
+        <input type="text" name="title" id="title" required><br><br>
+
+        <label for="file">Upload Note:</label>
+        <input type="file" name="file" id="file" required><br><br>
+
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Your Notes</h2>
+    <div id="notes-container"></div>
+
+    <script>
+        fetch('/notes')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('notes-container');
+                data.forEach(note => {
+                    const noteDiv = document.createElement('div');
+                    noteDiv.innerHTML = `<h3>${note.title}</h3><p>${note.content}</p>`;
+                    container.appendChild(noteDiv);
+                });
+            });
+    </script>
+</body>
+</html>
